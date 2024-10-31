@@ -6,6 +6,11 @@
  * Author: Marc Zyngier <maz@kernel.org>
  */
 
+// Move a variable to .rodata.custom, aligned on 64KB boundaries
+//__attribute__((section(".rodata.custom"))) struct arm64_ftr_override arm64_sw_feature_override;
+//__attribute__((section(".rodata.custom"))) int __pi_id_aa64smfr0_override;
+//__attribute__((section(".rodata.custom"))) int __pi_id_aa64isar1_override;
+
 #include <linux/ctype.h>
 #include <linux/kernel.h>
 #include <linux/libfdt.h>
@@ -151,6 +156,7 @@ static const struct ftr_set_desc isar1 __prel64_initconst = {
 	},
 };
 
+/*
 static const struct ftr_set_desc isar2 __prel64_initconst = {
 	.name		= "id_aa64isar2",
 	.override	= &id_aa64isar2_override,
@@ -161,6 +167,7 @@ static const struct ftr_set_desc isar2 __prel64_initconst = {
 		{}
 	},
 };
+*/
 
 static const struct ftr_set_desc smfr0 __prel64_initconst = {
 	.name		= "id_aa64smfr0",
@@ -196,14 +203,6 @@ static const struct ftr_set_desc sw_features __prel64_initconst = {
 
 static const
 PREL64(const struct ftr_set_desc, reg) regs[] __prel64_initconst = {
-	{ &mmfr1	},
-	{ &mmfr2	},
-	{ &pfr0 	},
-	{ &pfr1 	},
-	{ &isar1	},
-	{ &isar2	},
-	{ &smfr0	},
-	{ &sw_features	},
 };
 
 static const struct {
@@ -361,11 +360,13 @@ static __init void parse_cmdline(const void *fdt, int chosen)
 	static char const cmdline[] __initconst = CONFIG_CMDLINE;
 	const u8 *prop = get_bootargs_cmdline(fdt, chosen);
 
+#if 0
 	if (IS_ENABLED(CONFIG_CMDLINE_FORCE) || !prop)
 		__parse_cmdline(cmdline, true);
 
 	if (!IS_ENABLED(CONFIG_CMDLINE_FORCE) && prop)
 		__parse_cmdline(prop, true);
+#endif
 }
 
 void __init init_feature_override(u64 boot_status, const void *fdt,
