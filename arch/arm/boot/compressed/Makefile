@@ -94,7 +94,7 @@ targets       := vmlinux vmlinux.lds piggy_data piggy.o \
 
 KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
 
-ccflags-y := -fpic $(call cc-option,-mno-single-pic-base,) -fno-builtin \
+ccflags-y :=  $(call cc-option,-mno-single-pic-base,) -fno-builtin \
 	     -I$(srctree)/scripts/dtc/libfdt -fno-stack-protector \
 	     -I$(obj) $(DISABLE_ARM_SSP_PER_TASK_PLUGIN)
 ccflags-remove-$(CONFIG_FUNCTION_TRACER) += -pg

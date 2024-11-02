@@ -10,6 +10,7 @@
  * of the GNU General Public License, incorporated herein by reference.
  */
 
+#include <m1-compat.h>
 #include "modpost.h"
 #include "devicetable-offsets.h"
 
@@ -42,7 +43,7 @@ typedef struct {
 
 typedef struct {
 	__u8 b[16];
-} uuid_t;
+} linux_uuid_t; 
 
 #define	UUID_STRING_LEN		36
 
@@ -1361,10 +1362,10 @@ static int do_tee_entry(const char *filename, void *symval, char *alias)
 	DEF_FIELD_ADDR(symval, tee_client_device_id, uuid);
 
 	sprintf(alias, "tee:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
-		uuid->b[0], uuid->b[1], uuid->b[2], uuid->b[3], uuid->b[4],
-		uuid->b[5], uuid->b[6], uuid->b[7], uuid->b[8], uuid->b[9],
-		uuid->b[10], uuid->b[11], uuid->b[12], uuid->b[13], uuid->b[14],
-		uuid->b[15]);
+		uuid[0], uuid[1], uuid[2], uuid[3], uuid[4],
+		uuid[5], uuid[6], uuid[7], uuid[8], uuid[9],
+		uuid[10], uuid[11], uuid[12], uuid[13], uuid[14],
+		uuid[15]);
 
 	add_wildcard(alias);
 	return 1;
