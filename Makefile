@@ -1105,7 +1105,7 @@ export MODULES_NSDEPS := $(extmod_prefix)modules.nsdeps
 ifeq ($(KBUILD_EXTMOD),)
 
 build-dir	:= .
-clean-dirs	:= $(sort . Documentation \
+clean-dirs	:= $(sort . \
 		     $(patsubst %/,%,$(filter %/, $(core-) \
 			$(drivers-) $(libs-))))
 
