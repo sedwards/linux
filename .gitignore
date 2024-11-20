@@ -177,3 +177,7 @@ sphinx_*/
 
 # Rust analyzer configuration
 /rust-project.json
+
+*netfilter*
+/include/uapi/linux/netfilter/*
+xt_CONNMARK.h
